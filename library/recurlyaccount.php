@@ -128,9 +128,9 @@ class RecurlyAccount
 		}
 	}
 	
-	public function listCharges()
+	public function listCharges($params=array())
 	{
-		$uri = RecurlyClient::PATH_ACCOUNTS . urlencode($this->account_code) . RecurlyClient::PATH_ACCOUNT_CHARGES;
+		$uri = RecurlyClient::PATH_ACCOUNTS . urlencode($this->account_code) . RecurlyClient::PATH_ACCOUNT_CHARGES . "?" . http_build_query($params, null, '&');
 		$result = RecurlyClient::__sendRequest($uri);
 		if (preg_match("/^2..$/", $result->code)) {
 			$charges = RecurlyClient::__parse_xml($result->response, 'charge');
